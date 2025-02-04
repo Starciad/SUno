@@ -1,4 +1,3 @@
-#include "Card.h"
 #include "deck.h"
 #include "random.h"
 #include <stdio.h>
@@ -15,27 +14,65 @@ extern void deck_init(Deck* deck)
     {
         for (int num = 0; num <= 9; num++)
         {
-            deck->cards[index++] = (Card) { color, CARD_NUMBER_TYPE, (uint8_t)num };
+            deck->cards[index++] = (Card)
+            {
+                .color = color,
+                .type = CARD_NUMBER_TYPE,
+                .value = (uint8_t)num
+            };
 
             if (num != 0)
             {
-                deck->cards[index++] = (Card) { color, CARD_NUMBER_TYPE, (uint8_t)num };
+                deck->cards[index++] = (Card)
+                {
+                    .color = color,
+                    .type = CARD_NUMBER_TYPE,
+                    .value = (uint8_t)num
+                };
             }
         }
         
         for (int i = 0; i < 2; i++)
         {
-            deck->cards[index++] = (Card) { color, CARD_SKIP_TYPE, 0 };
-            deck->cards[index++] = (Card) { color, CARD_REVERSE_TYPE, 0 };
-            deck->cards[index++] = (Card) { color, CARD_DRAW_TWO_TYPE, 0 };
+            deck->cards[index++] = (Card)
+            {
+                .color = color,
+                .type = CARD_SKIP_TYPE,
+                .value = 0
+            };
+            
+            deck->cards[index++] = (Card)
+            {
+                .color = color,
+                .type = CARD_REVERSE_TYPE,
+                .value = 0
+            };
+
+            deck->cards[index++] = (Card)
+            {
+                .color = color,
+                .type = CARD_DRAW_TWO_TYPE,
+                .value = 0
+            };
         }
     }
 
     // Add wild and wild draw four cards
     for (int i = 0; i < 4; i++)
     {
-        deck->cards[index++] = (Card) { CARD_COLOR_BLACK, CARD_WILD_TYPE, 0 };
-        deck->cards[index++] = (Card) { CARD_COLOR_BLACK, CARD_WILD_DRAW_FOUR_TYPE, 0 };
+        deck->cards[index++] = (Card)
+        {
+            .color = CARD_COLOR_BLACK,
+            .type = CARD_WILD_TYPE,
+            .value = 0
+        };
+        
+        deck->cards[index++] = (Card)
+        {
+            .color = CARD_COLOR_BLACK,
+            .type = CARD_WILD_DRAW_FOUR_TYPE,
+            .value = 0
+        };
     }
 
     deck->top_index = 0; // Start from the beginning
