@@ -6,13 +6,13 @@ int main(void)
     Game game;
     int num_players;
 
-    printf("🎮 Welcome to UNO!\n");
+    puts("🎮 Welcome to UNO!");
     printf("Enter the number of players (2-10): ");
     scanf("%d", &num_players);
     
     if (num_players < 2 || num_players > 10)
     {
-        printf("Invalid number of players. Defaulting to 3 players.\n");
+        puts("Invalid number of players. Defaulting to 3 players.");
         num_players = 3;
     }
 

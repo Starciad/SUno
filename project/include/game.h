@@ -5,7 +5,7 @@
 #include "deck.h"
 #include <stdint.h>
 
-#define MAX_PLAYERS 4
+#define MAX_PLAYERS 10
 
 typedef struct Game {
     Deck game_deck;

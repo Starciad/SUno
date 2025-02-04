@@ -11,9 +11,9 @@ SRCS = $(wildcard $(SRC_DIR)/*.c)
 OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
 # Targets and rules
-all: $(BIN_DIR)/Uno
+all: $(BIN_DIR)/SUno
 
-$(BIN_DIR)/Uno: $(OBJS)
+$(BIN_DIR)/SUno: $(OBJS)
 	@mkdir -p $(BIN_DIR)
 	$(CC) $(CFLAGS) -o $@ $^
 

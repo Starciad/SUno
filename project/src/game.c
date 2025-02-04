@@ -12,9 +12,6 @@ const char* bot_names[] = {
     "Christopher", "Betty"
 };
 
-extern void game_next_turn(Game* game);
-extern void game_print_state(const Game* game);
-
 // Asks the player to call UNO
 void check_uno_call(Game* game, Player* player)
 {
@@ -104,6 +101,38 @@ void apply_card_effect(Game* game, const Card *played_card) {
     }
 }
 
+// Switches to the next player taking into account the direction
+extern void game_next_turn(Game* game) {
+    game->current_player += game->game_direction;
+
+    // If the next player exceeds the number of players, we go back to the beginning
+    if (game->current_player >= game->num_players)
+    {
+        game->current_player = 0;
+    }
+    else if (game->current_player < 0)
+    {
+        game->current_player = game->num_players - 1;
+    }
+}
+
+// Print the current game state
+extern void game_print_state(const Game* game) {
+    // Imprime o jogador atual
+    printf("\n- Current Player: %s\n", game->players[game->current_player].name);
+    printf("- Current card: ");
+    card_print(&game->discard_pile);
+    puts("\n");
+
+    // Prints the current player's hand of cards
+    printf("Your hand:\n");
+    for (int i = 0; i < game->players[game->current_player].hand_size; i++) {
+        printf("%d. ", i + 1);
+        card_print(&game->players[game->current_player].hand[i]);
+        printf("\n");
+    }
+}
+
 // Initializes the game, dealing the cards and setting up the players
 extern void game_init(Game* game, uint8_t num_players) {
     game->num_players = num_players;
@@ -154,8 +183,10 @@ extern void game_init(Game* game, uint8_t num_players) {
 // Updates the game loop to include UNO call
 extern void game_start(Game* game)
 {
-    while (1)
+    while (true)
     {
+        puts("\n=============================\n");
+
         game_print_state(game);
         Player* player = &game->players[game->current_player];
 
@@ -209,39 +240,4 @@ extern void game_start(Game* game)
 
         game_next_turn(game);
     }
-}
-
-// Switches to the next player taking into account the direction
-extern void game_next_turn(Game* game) {
-    game->current_player += game->game_direction;
-
-    // If the next player exceeds the number of players, we go back to the beginning
-    if (game->current_player >= game->num_players)
-    {
-        game->current_player = 0;
-    }
-    else if (game->current_player < 0)
-    {
-        game->current_player = game->num_players - 1;
-    }
-}
-
-// Print the current game state
-extern void game_print_state(const Game* game) {
-    // Imprime o jogador atual
-    printf("\nCurrent Player: %s\n", game->players[game->current_player].name);
-    printf("Current card: ");
-    card_print(&game->discard_pile);
-    printf("\n\n");
-
-    // Prints the current player's hand of cards
-    printf("Your hand:\n");
-    for (int i = 0; i < game->players[game->current_player].hand_size; i++) {
-        printf("%d. ", i + 1);
-        card_print(&game->players[game->current_player].hand[i]);
-        printf("\n");
-    }
-
-    // Displays the number of cards remaining in the deck
-    // printf("\nCards left in deck: %d\n", game->game_deck.card_count);
 }
