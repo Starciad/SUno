@@ -7,7 +7,8 @@
 #include <unistd.h>
 
 // Predefined names for bots
-const char* bot_names[] = {
+const char* bot_names[] =
+{
     "James", "Mary", "John", "Jennifer", "Robert", "Linda", 
     "Michael", "Elizabeth", "David", "Susan", "William", "Jessica", 
     "Joseph", "Sarah", "Charles", "Karen", "Thomas", "Nancy", 
@@ -15,7 +16,8 @@ const char* bot_names[] = {
 };
 
 // Switches to the next player taking into account the direction
-void game_next_turn(Game* game) {
+void game_next_turn(Game* game)
+{
     game->current_player_index += game->direction;
 
     // If the next player exceeds the number of players, we go back to the beginning
@@ -23,7 +25,7 @@ void game_next_turn(Game* game) {
     {
         game->current_player_index = 0;
     }
-    else if (game->current_player_index < 0)
+    else
     {
         game->current_player_index = game->num_players - 1;
     }
@@ -32,25 +34,26 @@ void game_next_turn(Game* game) {
 // Asks the player to call UNO
 void check_uno_call(Game* game, Player* player)
 {
-    if (player->hand_size == 1)
+    if (player->hand_size != 1)
     {
-        if (player->is_ai)
-        {
-            printf("🤖 %s calls UNO!\n", player->name);
-        }
-        else
-        {
-            char response[4];
-            printf("⚠️  You have one card left! Type 'UNO' to call it: ");
-            scanf("%3s", response);
+        return;
+    }
 
-            if (strcmp(response, "UNO") != 0)
-            {
-                printf("🚨 You forgot to call UNO! Drawing 2 penalty cards.\n");
-                player_add_card(player, deck_draw(&game->deck));
-                player_add_card(player, deck_draw(&game->deck));
-            }
-        }
+    if (player->is_ai)
+    {
+        printf("🤖 %s calls UNO!\n", player->name);
+        return;;
+    }
+
+    char response[4];
+    printf("⚠️  You have one card left! Type 'UNO' to call it: ");
+    scanf("%3s", response);
+
+    if (strcmp(response, "UNO") != 0)
+    {
+        printf("🚨 You forgot to call UNO! Drawing 2 penalty cards.\n");
+        player_add_card(player, deck_draw(&game->deck));
+        player_add_card(player, deck_draw(&game->deck));
     }
 }
 
@@ -160,12 +163,13 @@ void game_print_players(const Game* game)
         printf("[%d] %s - %d card(s)\n", i + 1, player->name, player->hand_size);
     }
 
-    puts("\n=======================");
+    printf("\n=======================");
 }
 
 
 // Print the current game state
-void game_print_state(const Game* game) {
+void game_print_state(const Game* game)
+{
     // Print the current player
     puts("\n");
     printf("- Current Player: %s\n", game->players[game->current_player_index].name);
@@ -175,7 +179,8 @@ void game_print_state(const Game* game) {
 }
 
 // Print the main user's HUD
-void game_print_hud_state(const Game* game) {
+void game_print_hud_state(const Game* game)
+{
     // Prints the user hand of cards
     printf("Your hand:\n");
     for (int i = 0; i < game->players[game->current_player_index].hand_size; i++) {
@@ -265,7 +270,8 @@ void game_execute_ai_turn(Game* game, Player* player)
 // =============================================================================== //
 
 // Initializes the game, dealing the cards and setting up the players
-extern void game_init(Game* game, uint8_t num_players) {
+extern void game_init(Game* game, uint8_t num_players)
+{
     game->num_players = num_players;
     game->current_player_index = 0;
     game->direction = 1; // 1 for clockwise, -1 for counterclockwise
@@ -318,7 +324,7 @@ extern void game_init(Game* game, uint8_t num_players) {
     for (uint8_t i = 0; i < num_players; i++)
     {
         printf("%i. %s\n", i + 1, game->players[i].name);
-        sleep(1);
+        usleep(800 * 1000);
     }
     printf("\n");
     puts("The game has started! Good luck!");

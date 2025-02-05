@@ -12,7 +12,7 @@ typedef struct Game {
     Deck deck;
     Player players[MAX_PLAYERS];
     uint8_t num_players;
-    uint8_t current_player_index;
+    int8_t current_player_index;
     Card discard_pile;
     int8_t direction;
 } Game;
