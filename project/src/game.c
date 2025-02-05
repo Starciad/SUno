@@ -330,7 +330,7 @@ void game_execute_ai_turn(Game* game, Player* player)
 
     printf("{ %s plays ", player->name);
     card_print(&selected_card);
-    printf(" }\n");
+    printf(". }\n");
 
     game->discard_pile = selected_card;
     apply_card_effect(game, &game->discard_pile);

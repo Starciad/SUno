@@ -96,5 +96,5 @@ extern bool card_is_playable(const Card* card, const Card* top_card)
     // 3. It is a wild card (black cards are always playable).
     return (card->color == top_card->color) ||
            (card->value != CARD_VALUE_NONE && top_card->value != CARD_VALUE_NONE && card->value == top_card->value) ||
-           (card->color == CARD_COLOR_BLACK);
+           (card->color == CARD_COLOR_BLACK || top_card->color == CARD_COLOR_BLACK);
 }

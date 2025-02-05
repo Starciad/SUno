@@ -1,4 +1,4 @@
-# Super Uno
+# 🎴 『 Super Uno 』 🎴
 
 ![screenshot_1]
 > Stylized logo of the project on the terminal.
@@ -136,7 +136,7 @@ For more details, check the [`LICENSE`](LICENSE) file.
 
 ## Acknowledgments
 
-🎴 | Thank you for checking out this project. Have fun playing UNO in the terminal! 😃
+🎴 ➥ Thank you for checking out this project. Have fun playing UNO in the terminal! 😃
 
 <!-- IMAGES & ASSETS -->
 [uno_deck]: ./.github/assets/images/general/uno_deck.webp
