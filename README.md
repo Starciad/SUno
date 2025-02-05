@@ -1,13 +1,15 @@
 # Super Uno
 
+![screenshot_1]
+> Stylized logo of the project on the terminal.
+
 Welcome to the **SUno** project, a **terminal-based** implementation of the **UNO** card game, written in **C** and following the **C99 standard**.
 
 This project was developed as a way to study and practice the C language, focusing on **modularization, coding best practices, code structure, and game logic**. The goal was to create a **challenging, fun, and faithful** experience based on the official UNO rules.
 
 ## How to Play
 
-The game is fully functional and can be downloaded from the **RELEASES** section.  
-Check it out at the link below:
+The game is fully functional and can be downloaded from the **RELEASES** section. Check it out at the link below:
 
 - <https://github.com/Starciad/SUno/releases>
 
@@ -39,13 +41,13 @@ The code structure has been carefully designed to be **easy to understand, modif
 - **Number of cards**: 108  
 - **Average playtime**: 15 – 30 minutes  
 
-### **Official Rules**
+### **Rules Used**
 
-The objective of the game is to be the first player to get rid of all their cards.
+- The objective of the game is to be the first player to get rid of all their cards.
 
-Each player starts with **7 cards**, and a card from the top of the deck is flipped to start the **discard pile**. During the game, players must **play a card that matches the top card** of the discard pile by **number, color, or type**. If they cannot play, they must **draw a card**.
+- Each player starts with **7 cards**, and a card from the top of the deck is flipped to start the **discard pile**. During the game, players must **play a card that matches the top card** of the discard pile by **number, color, or type**. If they cannot play, they must **draw a card**.
 
-The deck includes **number cards (0–9)** and **special action cards**, as shown in the table below:
+- The deck includes **number cards (0–9)** and **special action cards**, as shown in the table below:
 
 | Card            | Effect |
 |----------------|--------|
@@ -55,14 +57,12 @@ The deck includes **number cards (0–9)** and **special action cards**, as show
 | **Wild**       | Allows the player to **choose a new color**. |
 | **Wild Draw Four (+4)** | Allows the player to **choose a new color**, forces the next player to **draw 4 cards**, and lose their turn. |
 
-If a player has only **one card left**, they must declare "**UNO!**". If caught not saying it, they must **draw 2 penalty cards**. The game continues until one player has no cards left.
+- If a player has only **one card left**, they must declare "**UNO!**". If caught not saying it, they must **draw 2 penalty cards**. The game continues until one player has no cards left.
+
+![uno_deck]
+> A complete deck of UNO cards.
 
 ## Screenshots
-
-![screenshot_1]
-> Stylized logo of the project on the terminal.
-
----
 
 ![screenshot_2]
 > Player list displayed after game starts.
@@ -85,19 +85,19 @@ Contributions are welcome! If you want to **fix bugs, optimize the code, or add 
 2. Create a **new branch** for your changes:
 
     ```sh
-        git checkout -b my-modification
+    git checkout -b my-modification
     ```
 
 3. Make your changes and **commit with a descriptive message**:
 
     ```sh
-        git commit -m "feat: improved AI logic."
+    git commit -m "feat: improved AI logic."
     ```
 
 4. Push your changes to your repository:
 
     ```sh
-        git push origin my-modification
+    git push origin my-modification
     ```
 
 5. Open a **Pull Request (PR)** so your changes can be reviewed.
@@ -111,8 +111,8 @@ To compile **SUno**, you need a **C compiler** that supports **C99**. The code c
 ### **1. Clone the repository**
 
 ```sh
-    git clone https://github.com/Starciad/SUno.git
-    cd SUno
+git clone https://github.com/Starciad/SUno.git
+cd SUno
 ```
 
 ### **2. Compile the code**
@@ -122,7 +122,7 @@ Make sure you have **GCC** and **make** installed in your environment. Then, nav
 ### **3. Run the game**
 
 ```sh
-    ./suno
+./SUno
 ```
 
 If you prefer to compile manually, ensure that all `*.c` files are being compiled correctly and that the headers in `include/` are included.
@@ -136,10 +136,11 @@ For more details, check the [`LICENSE`](LICENSE) file.
 
 ## Acknowledgments
 
-🎴 - Thank you for checking out this project. Have fun playing UNO in the terminal! 😃
+🎴 | Thank you for checking out this project. Have fun playing UNO in the terminal! 😃
 
 <!-- IMAGES & ASSETS -->
-[screenshot_1]: ./.github/assets/screenshots/screenshot_1.webp
-[screenshot_2]: ./.github/assets/screenshots/screenshot_2.webp
-[screenshot_3]: ./.github/assets/screenshots/screenshot_3.webp
-[screenshot_4]: ./.github/assets/screenshots/screenshot_4.webp
+[uno_deck]: ./.github/assets/images/general/uno_deck.webp
+[screenshot_1]: ./.github/assets/images/screenshots/screenshot_1.webp
+[screenshot_2]: ./.github/assets/images/screenshots/screenshot_2.webp
+[screenshot_3]: ./.github/assets/images/screenshots/screenshot_3.webp
+[screenshot_4]: ./.github/assets/images/screenshots/screenshot_4.webp
