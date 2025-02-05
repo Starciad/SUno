@@ -1,6 +1,8 @@
 #include "ai.h"
 #include "game.h"
+#include "random.h"
 #include <stdbool.h>
+#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -278,7 +280,9 @@ extern void game_init(Game* game, uint8_t num_players)
     deck_init(&game->deck); // Create the deck of cards
 
     // Shuffle the deck
-    for (uint8_t i = 0; i < DECK_SHIFTING_COUNT; i++)
+    uint8_t deck_shifting_count = random_int(MIN_DECK_SHIFTING_COUNT, MAX_DECK_SHIFTING_COUNT);
+
+    for (uint8_t i = 0; i < deck_shifting_count; i++)
     {
         deck_shuffle(&game->deck); 
     }

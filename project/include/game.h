@@ -5,7 +5,8 @@
 #include "deck.h"
 #include <stdint.h>
 
-#define DECK_SHIFTING_COUNT 50
+#define MIN_DECK_SHIFTING_COUNT 50
+#define MAX_DECK_SHIFTING_COUNT 1000
 #define MAX_PLAYERS 10
 
 typedef struct Game {
