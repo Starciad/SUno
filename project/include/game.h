@@ -5,6 +5,9 @@
 #include "deck.h"
 #include <stdint.h>
 
+#define MIN_PLAYERS_SHIFTING_COUNT 10
+#define MAX_PLAYERS_SHIFTING_COUNT 1000
+
 #define MIN_DECK_SHIFTING_COUNT 10
 #define MAX_DECK_SHIFTING_COUNT 1000
 

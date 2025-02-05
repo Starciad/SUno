@@ -351,7 +351,7 @@ extern void game_init(Game* game, uint8_t num_players)
 
     // Shuffle the deck
     uint8_t deck_shifting_count = random_int(MIN_DECK_SHIFTING_COUNT, MAX_DECK_SHIFTING_COUNT);
-
+    
     for (uint8_t i = 0; i < deck_shifting_count; i++)
     {
         deck_shuffle(&game->deck); 
@@ -381,6 +381,14 @@ extern void game_init(Game* game, uint8_t num_players)
         }
 
         bot_index++;
+    }
+
+    // Shuffle the deck
+    uint8_t players_shifting_count = random_int(MIN_PLAYERS_SHIFTING_COUNT, MAX_PLAYERS_SHIFTING_COUNT);
+    
+    for (uint8_t i = 0; i < players_shifting_count; i++)
+    {
+        players_shuffle(game->players, num_players);
     }
 
     // Put a card in the discard pile

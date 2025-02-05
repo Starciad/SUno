@@ -17,6 +17,7 @@ typedef struct Player {
 
 // Function prototypes
 void player_init(Player* player, const char* name, bool is_ai);
+void players_shuffle(Player players[], uint8_t num_players);
 void player_add_card(Player* player, Card new_card);
 void player_remove_card(Player* player, uint8_t index);
 void player_print_hand(const Player* player);

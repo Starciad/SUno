@@ -1,4 +1,5 @@
 #include "player.h"
+#include "random.h"
 #include <stdio.h>
 #include <string.h>
 
@@ -10,6 +11,24 @@ extern void player_init(Player* player, const char* name, bool is_ai)
     player->name[MAX_NAME_LEN - 1] = '\0'; // Ensure null-termination
     player->hand_size = 0;
     player->is_ai = is_ai;
+}
+
+// Swaps two players in the array
+static void swap_players(Player* a, Player* b)
+{
+    Player temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+// Fisher-Yates Shuffle algorithm using random_int()
+void players_shuffle(Player players[], uint8_t num_players)
+{
+    for (uint8_t i = num_players - 1; i > 0; i--)
+    {
+        uint8_t j = (uint8_t)random_int(0, i);
+        swap_players(&players[i], &players[j]);
+    }
 }
 
 // Adds a card to the player's hand
