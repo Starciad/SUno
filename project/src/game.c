@@ -233,7 +233,7 @@ void game_print_players(const Game* game)
         }
     }
 
-    printf("\n------------------------");
+    printf("\n-----------------------------------");
 }
 
 
@@ -392,7 +392,7 @@ extern void game_init(Game* game, uint8_t num_players)
         game->discard_pile = deck_draw(&game->deck);
     }
 
-    puts("\n=============================\n");
+    puts("\n-=-=-=-=-=-=-={ SEPARATOR }=-=-=-=-=-=-=-\n");
     puts("Your competitors are:\n");
     for (uint8_t i = 0; i < num_players; i++)
     {
