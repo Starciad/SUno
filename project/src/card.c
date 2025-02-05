@@ -4,40 +4,40 @@
 
 const char* color_names[] =
 {
-    ANSI_COLOR_RED "Red" ANSI_COLOR_RESET,
-    ANSI_COLOR_BLUE "Blue" ANSI_COLOR_RESET,
-    ANSI_COLOR_GREEN "Green" ANSI_COLOR_RESET,
-    ANSI_COLOR_YELLOW "Yellow" ANSI_COLOR_RESET,
-    "Black"
+    /* [0] */ ANSI_COLOR_RED "Red" ANSI_COLOR_RESET,
+    /* [1] */ ANSI_COLOR_BLUE "Blue" ANSI_COLOR_RESET,
+    /* [2] */ ANSI_COLOR_GREEN "Green" ANSI_COLOR_RESET,
+    /* [3] */ ANSI_COLOR_YELLOW "Yellow" ANSI_COLOR_RESET,
+    /* [4] */ "Black"
 };
 
 const char* value_names[] =
 { 
-    "Zero",
-    "One",
-    "Two",
-    "Three",
-    "Four",
-    "Five",
-    "Six",
-    "Seven",
-    "Eight",
-    "Nine",
-    "Skip",
-    "Reverse",
-    "Draw Two",
-    "Wild",
-    "Wild Draw Four"
+    /* [0] */ "Zero",
+    /* [1] */ "One",
+    /* [2] */ "Two",
+    /* [3] */ "Three",
+    /* [4] */ "Four",
+    /* [5] */ "Five",
+    /* [6] */ "Six",
+    /* [7] */ "Seven",
+    /* [8] */ "Eight",
+    /* [9] */ "Nine",
+    /* [10] */ "Skip",
+    /* [11] */ "Reverse",
+    /* [12] */ "Draw Two",
+    /* [13] */ "Wild",
+    /* [14] */ "Wild Draw Four"
 };
 
 const char* type_names[] =
 {
-    "Number",
-    "Skip",
-    "Reverse",
-    "Draw Two",
-    "Wild",
-    "Wild Draw Four"
+    /* [0] */ "Number",
+    /* [1] */ "Skip",
+    /* [2] */ "Reverse",
+    /* [3] */ "Draw Two",
+    /* [4] */ "Wild",
+    /* [5] */ "Wild Draw Four"
 };
 
 // Returns the ANSI color string corresponding to the card color
