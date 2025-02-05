@@ -138,6 +138,32 @@ void apply_card_effect(Game* game, const Card* played_card)
 }
 
 // =============================================================================== //
+// Prints the player list.
+void game_print_players(const Game* game)
+{
+    puts("\n\n===== Player List =====\n");
+
+    for (uint8_t i = 0; i < game->num_players; i++)
+    {
+        const Player* player = &game->players[i];
+
+        // Indicate the current player
+        if (i == game->current_player_index)
+        {
+            printf(">  ");
+        }
+        else
+        {
+            printf("   ");
+        }
+
+        printf("[%d] %s - %d card(s)\n", i + 1, player->name, player->hand_size);
+    }
+
+    puts("\n=======================");
+}
+
+
 // Print the current game state
 void game_print_state(const Game* game) {
     // Print the current player
@@ -304,9 +330,11 @@ extern void game_start(Game* game)
 {
     while (true)
     {
-        printf("\n=============================");
+        printf("\n_______________________");
 
+        game_print_players(game);
         game_print_state(game);
+
         Player* player = &game->players[game->current_player_index];
 
         if (player->is_ai)
