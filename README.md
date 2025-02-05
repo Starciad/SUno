@@ -1,15 +1,17 @@
 # Super Uno
 
-## Introduction
-
 Welcome to the **SUno** project, a **terminal-based** implementation of the **UNO** card game, written in **C** and following the **C99 standard**.
 
 This project was developed as a way to study and practice the C language, focusing on **modularization, coding best practices, code structure, and game logic**. The goal was to create a **challenging, fun, and faithful** experience based on the official UNO rules.
+
+## How to Play
 
 The game is fully functional and can be downloaded from the **RELEASES** section.  
 Check it out at the link below:
 
 - <https://github.com/Starciad/SUno/releases>
+
+Download the appropriate version for your operating system. After that, extract the compressed file to the location you want on your computer. Then, simply run the executable file.
 
 ## About the Project
 
