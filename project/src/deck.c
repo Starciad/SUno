@@ -109,8 +109,8 @@ extern Card deck_draw(Deck* deck)
 {
     if (deck->top_index >= DECK_SIZE)
     {
-        printf("Deck is empty! Reshuffling not implemented yet.\n");
-        exit(1);
+        deck->top_index = 0;
+        deck_shuffle(deck);
     }
     
     return deck->cards[deck->top_index++];
