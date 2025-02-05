@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Welcome to the **SUNO** project, a **terminal-based** implementation of the **UNO** card game, written in **C** and following the **C99 standard**.
+Welcome to the **SUno** project, a **terminal-based** implementation of the **UNO** card game, written in **C** and following the **C99 standard**.
 
 This project was developed as a way to study and practice the C language, focusing on **modularization, coding best practices, code structure, and game logic**. The goal was to create a **challenging, fun, and faithful** experience based on the official UNO rules.
 
@@ -11,11 +11,9 @@ Check it out at the link below:
 
 - <https://github.com/Starciad/SUno/releases>
 
----
-
 ## About the Project
 
-**SUNO** is a **fully terminal-based** UNO game, providing a **smooth and immersive** gameplay experience with support for **solo mode against AI opponents**.
+**SUno** is a **fully terminal-based** UNO game, providing a **smooth and immersive** gameplay experience with support for **solo mode against AI opponents**.
 
 ### **Main Features**
 
@@ -59,7 +57,23 @@ If a player has only **one card left**, they must declare "**UNO!**". If caught 
 
 ## Screenshots
 
-📸 *Add images or GIFs showcasing the game running in the terminal here.*
+![screenshot_1]
+> Stylized logo of the project on the terminal.
+
+---
+
+![screenshot_2]
+> Player list displayed after game starts.
+
+---
+
+![screenshot_3]
+> Player HUD.
+
+---
+
+![screenshot_4]
+> Bots playing the game.
 
 ## Contributions
 
@@ -68,21 +82,21 @@ Contributions are welcome! If you want to **fix bugs, optimize the code, or add 
 1. **Fork** the repository.
 2. Create a **new branch** for your changes:
 
-```sh
-git checkout -b my-modification
-```
+    ```sh
+        git checkout -b my-modification
+    ```
 
 3. Make your changes and **commit with a descriptive message**:
 
-```sh
-git commit -m "feat: improved AI logic."
-```
+    ```sh
+        git commit -m "feat: improved AI logic."
+    ```
 
 4. Push your changes to your repository:
 
-```sh
-git push origin my-modification
-```
+    ```sh
+        git push origin my-modification
+    ```
 
 5. Open a **Pull Request (PR)** so your changes can be reviewed.
 
@@ -90,13 +104,13 @@ If you find a bug or have a suggestion, feel free to **open an issue**! 🚀
 
 ## Compiling the Project
 
-To compile **SUNO**, you need a **C compiler** that supports **C99**. The code can be easily compiled using **GCC**.
+To compile **SUno**, you need a **C compiler** that supports **C99**. The code can be easily compiled using **GCC**.
 
 ### **1. Clone the repository**
 
 ```sh
-git clone https://github.com/Starciad/SUno.git
-cd SUno
+    git clone https://github.com/Starciad/SUno.git
+    cd SUno
 ```
 
 ### **2. Compile the code**
@@ -106,7 +120,7 @@ Make sure you have **GCC** and **make** installed in your environment. Then, nav
 ### **3. Run the game**
 
 ```sh
-./suno
+    ./suno
 ```
 
 If you prefer to compile manually, ensure that all `*.c` files are being compiled correctly and that the headers in `include/` are included.
@@ -121,3 +135,9 @@ For more details, check the [`LICENSE`](LICENSE) file.
 ## Acknowledgments
 
 🎴 - Thank you for checking out this project. Have fun playing UNO in the terminal! 😃
+
+<!-- IMAGES & ASSETS -->
+[screenshot_1]: ./.github/assets/screenshots/screenshot_1.webp
+[screenshot_2]: ./.github/assets/screenshots/screenshot_2.webp
+[screenshot_3]: ./.github/assets/screenshots/screenshot_3.webp
+[screenshot_4]: ./.github/assets/screenshots/screenshot_4.webp
