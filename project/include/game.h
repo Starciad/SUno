@@ -9,13 +9,19 @@
 #define MAX_DECK_SHIFTING_COUNT 1000
 #define MAX_PLAYERS 10
 
+typedef enum GameDirection {
+    GAME_DIRECTION_NONE = 0,
+    GAME_DIRECTION_LEFT = -1,
+    GAME_DIRECTION_RIGHT = 1
+} GameDirection;
+
 typedef struct Game {
     Deck deck;
     Player players[MAX_PLAYERS];
     uint8_t num_players;
     int8_t current_player_index;
     Card discard_pile;
-    int8_t direction;
+    GameDirection direction;
 } Game;
 
 // Function prototypes

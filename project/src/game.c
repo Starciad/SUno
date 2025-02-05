@@ -18,6 +18,7 @@ const char* bot_names[] =
     "Christopher", "Betty"
 };
 
+// =============================================================================== //
 // Returns the index of the next player considering the game direction
 uint8_t game_get_next_player_index(const Game* game)
 {
@@ -52,17 +53,17 @@ void check_uno_call(Game* game, Player* player)
 
     if (player->is_ai)
     {
-        printf("🤖 %s calls UNO!\n", player->name);
-        return;;
+        printf("{ %s calls UNO! }\n", player->name);
+        return;
     }
 
     char response[4];
-    printf("⚠️ You have one card left! Type 'UNO' to call it: ");
+    printf("- You have one card left! Type 'UNO' to call it: ");
     scanf("%3s", response);
 
     if (strcmp(response, "UNO") != 0)
     {
-        printf("🚨 You forgot to call UNO! Drawing 2 penalty cards.\n");
+        puts("{ You forgot to call UNO! Drawing 2 penalty cards. }");
         player_add_card(player, deck_draw(&game->deck));
         player_add_card(player, deck_draw(&game->deck));
     }
@@ -72,21 +73,21 @@ void check_uno_call(Game* game, Player* player)
 // Handles the effect of a "Skip" card
 static void apply_skip_effect(Game* game)
 {
-    puts("Next player is skipped!");
+    puts("{ Next player is skipped! }");
     game_next_turn(game);
 }
 
 // Handles the effect of a "Reverse" card
 static void apply_reverse_effect(Game* game)
 {
-    puts("Changing direction!");
+    puts("{ Changing direction! }");
     game->direction *= -1;
 }
 
 // Handles the effect of a "Draw Two" card
 static void apply_draw_two_effect(Game* game)
 {
-    puts("Next player draws 2 cards!");
+    puts("{ Next player draws 2 cards! }");
     uint8_t next_player_index = game_get_next_player_index(game);
     game_next_turn(game);
 
@@ -107,7 +108,7 @@ static CardColor choose_wild_color(const Game* game)
     }
     else
     {
-        printf("Choose a color (0: Red, 1: Blue, 2: Green, 3: Yellow): ");
+        printf("- Choose a color (0: Red | 1: Blue | 2: Green | 3: Yellow): ");
         scanf("%d", &chosen_color);
     }
 
@@ -130,19 +131,19 @@ static const char* card_color_to_string(CardColor color)
 // Handles the effect of a "Wild" card
 static void apply_wild_effect(Game* game)
 {
-    puts("Choosing a new color...");
+    puts("{ Choosing a new color... }");
     game->discard_pile.color = choose_wild_color(game);
-    printf("The chosen color was: %s\n", card_color_to_string(game->discard_pile.color));
+    printf("{ The chosen color was: %s. }\n", card_color_to_string(game->discard_pile.color));
 }
 
 // Handles the effect of a "Wild Draw Four" card
 static void apply_wild_draw_four_effect(Game* game)
 {
-    puts("Choosing a new color, next player draws 4 cards!");
+    puts("{ Choosing a new color, next player draws 4 cards! }");
     uint8_t next_player_index = game_get_next_player_index(game);
 
     game->discard_pile.color = choose_wild_color(game);
-    printf("The chosen color was: %s\n", card_color_to_string(game->discard_pile.color));
+    printf("{ The chosen color was: %s. }\n", card_color_to_string(game->discard_pile.color));
 
     game_next_turn(game);
 
@@ -188,6 +189,25 @@ void game_print_players(const Game* game)
 {
     puts("\n\n===== Player List =====\n");
 
+    switch (game->direction)
+    {
+        case GAME_DIRECTION_NONE:
+            puts("-  Game Direction is Empty!\n");
+            break;
+
+        case GAME_DIRECTION_LEFT:
+            puts("-  Game Direction: LEFT\n");
+            break;
+
+        case GAME_DIRECTION_RIGHT:
+            puts("-  Game Direction: RIGHT\n");
+            break;
+
+        default:
+            puts("-  Game Direction is Unknown!\n");
+            break;
+    }
+
     for (uint8_t i = 0; i < game->num_players; i++)
     {
         const Player* player = &game->players[i];
@@ -202,7 +222,15 @@ void game_print_players(const Game* game)
             printf("   ");
         }
 
-        printf("[%d] %s - %d card(s)\n", i + 1, player->name, player->hand_size);
+        // Highlight players who only have one card.
+        if (player->hand_size == 1)
+        {
+            printf("[%d] %s - %d card(s) [UNO!]\n", i + 1, player->name, player->hand_size);
+        }
+        else
+        {
+            printf("[%d] %s - %d card(s)\n", i + 1, player->name, player->hand_size);
+        }
     }
 
     printf("\n=======================");
@@ -214,17 +242,18 @@ void game_print_state(const Game* game)
 {
     // Print the current player
     puts("\n");
-    printf("- Current Player: %s\n", game->players[game->current_player_index].name);
-    printf("- Current Card on the Table: ");
+    printf("( Current Player: %s. )\n", game->players[game->current_player_index].name);
+    printf("( Current Card on the Table: ");
     card_print(&game->discard_pile);
-    puts("\n");
+    puts(" )\n");
 }
 
 // Print the main user's HUD
 void game_print_hud_state(const Game* game)
 {
     // Prints the user hand of cards
-    printf("Your hand:\n");
+    puts("YOUR HAND:\n");
+
     for (int i = 0; i < game->players[game->current_player_index].hand_size; i++) {
         printf("%d. ", i + 1);
         card_print(&game->players[game->current_player_index].hand[i]);
@@ -243,12 +272,12 @@ void game_execute_user_turn(Game* game, Player* player)
     game_print_hud_state(game);
 
     try_again_action_label:
-    printf("Your turn! Select a card (1-%d) or enter 0 to draw: ", player->hand_size);
+    printf("- Your turn! Select a card (1-%d) or enter 0 to draw: ", player->hand_size);
     scanf("%d", &selected_card);
     
     if (selected_card == 0)
     {
-        puts("You drawn a card...");
+        puts("{ You drawn a card... }");
         Card drawn_card = deck_draw(&game->deck);
         player_add_card(player, drawn_card);
         return;
@@ -258,7 +287,7 @@ void game_execute_user_turn(Game* game, Player* player)
 
     if (selected_card < 0 || selected_card >= player->hand_size || !card_is_playable(&player->hand[selected_card], &game->discard_pile))
     {
-        puts("Invalid move! Try again.");
+        puts("{ Invalid move! Try again. }");
         goto try_again_action_label;
     }
 
@@ -275,7 +304,7 @@ void game_execute_ai_turn(Game* game, Player* player)
 
     if (!ai_try_select_card(player, &game->discard_pile, &selected_card))
     {
-        printf("🤖 %s draws a card.\n", player->name);
+        printf("{ %s draws a card. }\n", player->name);
         Card drawn_card = deck_draw(&game->deck);
         player_add_card(player, drawn_card);
         return;
@@ -295,13 +324,13 @@ void game_execute_ai_turn(Game* game, Player* player)
 
     if (selected_index == -1)
     {
-        fprintf(stderr, "Error: AI selected a card that does not exist in hand.\n");
+        fprintf(stderr, "{ Error: AI selected a card that does not exist in hand. }\n");
         return;
     }
 
-    printf("🤖 %s plays ", player->name);
+    printf("{ %s plays ", player->name);
     card_print(&selected_card);
-    printf("\n");
+    printf(" }\n");
 
     game->discard_pile = selected_card;
     apply_card_effect(game, &game->discard_pile);
@@ -316,7 +345,7 @@ extern void game_init(Game* game, uint8_t num_players)
 {
     game->num_players = num_players;
     game->current_player_index = 0;
-    game->direction = 1; // 1 for clockwise, -1 for counterclockwise
+    game->direction = GAME_DIRECTION_RIGHT;
 
     deck_init(&game->deck); // Create the deck of cards
 
@@ -330,7 +359,7 @@ extern void game_init(Game* game, uint8_t num_players)
 
     // Allows the player to choose their name
     char player_name[50];
-    printf("Enter your name: ");
+    printf("- Enter your name: ");
     scanf("%49s", player_name); // Limit input to prevent overflow
     player_init(&game->players[0], player_name, false); // The first player is the human
 
@@ -380,7 +409,7 @@ extern void game_start(Game* game)
 {
     while (true)
     {
-        printf("\n_______________________");
+        puts("\n-=-=-=-=-=-=-={ SEPARATOR }=-=-=-=-=-=-=-");
 
         game_print_players(game);
         game_print_state(game);
@@ -398,7 +427,7 @@ extern void game_start(Game* game)
 
         if (player->hand_size == 0)
         {
-            printf("🎉 %s WINS! 🎉\n", player->name);
+            printf("{ %s WINS! }\n\n", player->name);
             break;
         }
 
