@@ -405,11 +405,10 @@ extern void game_init(Game* game, uint8_t num_players)
     for (uint8_t i = 0; i < num_players; i++)
     {
         printf("%i. %s\n", i + 1, game->players[i].name);
-        usleep(500 * 1000);
     }
     printf("\n");
     puts("The game has started! Good luck!");
-    sleep(3);
+    sleep(5);
 }
 
 // Updates the game loop to include UNO call
