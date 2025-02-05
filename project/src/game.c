@@ -15,20 +15,28 @@ const char* bot_names[] =
     "Christopher", "Betty"
 };
 
-// Switches to the next player taking into account the direction
+// Returns the index of the next player considering the game direction
+uint8_t game_get_next_player_index(const Game* game)
+{
+    int8_t next_index = game->current_player_index + game->direction;
+
+    // Handle wrap-around logic
+    if (next_index >= game->num_players)
+    {
+        return 0; // Wrap back to the first player
+    }
+    else if (next_index < 0)
+    {
+        return game->num_players - 1; // Wrap back to the last player
+    }
+
+    return (uint8_t)next_index;
+}
+
+// Switches to the next player using game_get_next_player_index
 void game_next_turn(Game* game)
 {
-    game->current_player_index += game->direction;
-
-    // If the next player exceeds the number of players, we go back to the beginning
-    if (game->current_player_index >= game->num_players)
-    {
-        game->current_player_index = 0;
-    }
-    else
-    {
-        game->current_player_index = game->num_players - 1;
-    }
+    game->current_player_index = game_get_next_player_index(game);
 }
 
 // Asks the player to call UNO
@@ -46,7 +54,7 @@ void check_uno_call(Game* game, Player* player)
     }
 
     char response[4];
-    printf("⚠️  You have one card left! Type 'UNO' to call it: ");
+    printf("⚠️ You have one card left! Type 'UNO' to call it: ");
     scanf("%3s", response);
 
     if (strcmp(response, "UNO") != 0)
@@ -61,16 +69,7 @@ void check_uno_call(Game* game, Player* player)
 void apply_card_effect(Game* game, const Card* played_card)
 {
     // Select the next player index based on the current context.
-    uint8_t next_player_index =  game->current_player_index + game->direction;
-
-    if (next_player_index >= game->num_players)
-    {
-        next_player_index = 0;
-    }
-    else if (next_player_index < 0)
-    {
-        next_player_index = game->num_players - 1;
-    }
+    uint8_t next_player_index = game_get_next_player_index(game);
 
     // ================================ //
 
@@ -324,7 +323,7 @@ extern void game_init(Game* game, uint8_t num_players)
     for (uint8_t i = 0; i < num_players; i++)
     {
         printf("%i. %s\n", i + 1, game->players[i].name);
-        usleep(800 * 1000);
+        usleep(500 * 1000);
     }
     printf("\n");
     puts("The game has started! Good luck!");
