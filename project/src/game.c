@@ -1,5 +1,5 @@
-#include "game.h"
 #include "ai.h"
+#include "game.h"
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
