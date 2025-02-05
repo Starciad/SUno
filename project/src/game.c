@@ -55,28 +55,47 @@ void check_uno_call(Game* game, Player* player)
 }
 
 // Applies the effects of special cards
-void apply_card_effect(Game* game, const Card* played_card) {
+void apply_card_effect(Game* game, const Card* played_card)
+{
+    // Select the next player index based on the current context.
+    uint8_t next_player_index =  game->current_player_index + game->direction;
+
+    if (next_player_index >= game->num_players)
+    {
+        next_player_index = 0;
+    }
+    else if (next_player_index < 0)
+    {
+        next_player_index = game->num_players - 1;
+    }
+
+    // ================================ //
+
     switch (played_card->type)
     {
         case CARD_SKIP_TYPE:
-            printf("⏩ %s played Skip! Next player is skipped!\n", game->players[game->current_player_index].name);
+            puts("Next player is skipped!");
             game_next_turn(game);
             break;
 
         case CARD_REVERSE_TYPE:
-            printf("🔄 %s played Reverse! Changing direction!\n", game->players[game->current_player_index].name);
+            puts("Changing direction!");
             game->direction *= -1;
             break;
 
         case CARD_DRAW_TWO_TYPE:
-            printf("🚨 %s played Draw Two! Next player draws 2 cards!\n", game->players[game->current_player_index].name);
+            puts("Next player draws 2 cards!");
             game_next_turn(game);
-            player_add_card(&game->players[game->current_player_index], deck_draw(&game->deck));
-            player_add_card(&game->players[game->current_player_index], deck_draw(&game->deck));
+
+            for (uint8_t i = 0; i < 2; i++)
+            {
+                player_add_card(&game->players[next_player_index], deck_draw(&game->deck));
+            }
             break;
 
         case CARD_WILD_TYPE:
-            printf("🎨 %s played Wild! Choosing a new color...\n", game->players[game->current_player_index].name);
+            puts("Choosing a new color...");
+
             if (game->players[game->current_player_index].is_ai)
             {
                 game->discard_pile.color = rand() % 4; // AI chooses a random color
@@ -91,7 +110,7 @@ void apply_card_effect(Game* game, const Card* played_card) {
             break;
 
         case CARD_WILD_DRAW_FOUR_TYPE:
-            printf("🔥 %s played Wild Draw Four! Choosing a new color, next player draws 4 cards!\n", game->players[game->current_player_index].name);
+            puts("Choosing a new color, next player draws 4 cards!");
 
             if (game->players[game->current_player_index].is_ai)
             {
@@ -109,7 +128,7 @@ void apply_card_effect(Game* game, const Card* played_card) {
 
             for (int i = 0; i < 4; i++)
             {
-                player_add_card(&game->players[game->current_player_index], deck_draw(&game->deck));
+                player_add_card(&game->players[next_player_index], deck_draw(&game->deck));
             }
             break;
 
@@ -124,7 +143,7 @@ void game_print_state(const Game* game) {
     // Print the current player
     puts("\n");
     printf("- Current Player: %s\n", game->players[game->current_player_index].name);
-    printf("- Current Card: ");
+    printf("- Current Card on the Table: ");
     card_print(&game->discard_pile);
     puts("\n");
 }
@@ -226,7 +245,12 @@ extern void game_init(Game* game, uint8_t num_players) {
     game->direction = 1; // 1 for clockwise, -1 for counterclockwise
 
     deck_init(&game->deck); // Create the deck of cards
-    deck_shuffle(&game->deck); // Shuffle the deck
+
+    // Shuffle the deck
+    for (uint8_t i = 0; i < DECK_SHIFTING_COUNT; i++)
+    {
+        deck_shuffle(&game->deck); 
+    }
 
     // Allows the player to choose their name
     char player_name[50];
@@ -263,7 +287,16 @@ extern void game_init(Game* game, uint8_t num_players) {
         game->discard_pile = deck_draw(&game->deck);
     }
 
-    printf("The game has started! Good luck!\n");
+    puts("\n=============================\n");
+    puts("Your competitors are:\n");
+    for (uint8_t i = 0; i < num_players; i++)
+    {
+        printf("%i. %s\n", i + 1, game->players[i].name);
+        sleep(1);
+    }
+    printf("\n");
+    puts("The game has started! Good luck!");
+    sleep(3);
 }
 
 // Updates the game loop to include UNO call
