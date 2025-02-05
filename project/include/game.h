@@ -8,18 +8,16 @@
 #define MAX_PLAYERS 10
 
 typedef struct Game {
-    Deck game_deck;
+    Deck deck;
     Player players[MAX_PLAYERS];
     uint8_t num_players;
-    uint8_t current_player;
+    uint8_t current_player_index;
     Card discard_pile;
-    int8_t game_direction;
+    int8_t direction;
 } Game;
 
 // Function prototypes
 void game_init(Game* game, uint8_t num_players);
 void game_start(Game* game);
-void game_next_turn(Game* game);
-void game_print_state(const Game* game);
 
 #endif // GAME_H

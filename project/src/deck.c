@@ -9,55 +9,68 @@ extern void deck_init(Deck* deck)
 {
     uint8_t index = 0;
 
-    // Populate deck with standard cards
-    for (int color = CARD_COLOR_RED; color <= CARD_COLOR_YELLOW; color++)
+    // Populate deck with standard cards.
+
+    /* 
+     * Creates the same cards in the four existing color groupings:
+     *
+     * - CARD_COLOR_RED = 0
+     * - CARD_COLOR_BLUE = 1
+     * - CARD_COLOR_GREEN = 2
+     * - CARD_COLOR_YELLOW = 3
+     * 
+     */
+    for (int i = 0; i < 4; i++)
     {
-        for (int num = 0; num <= 9; num++)
+        // This loop creates the numeric cards (from 1 to 9) for the current color group.
+        for (int j = 0; j <= 9; j++)
         {
             deck->cards[index++] = (Card)
             {
-                .color = color,
+                .color = (CardColor)i,
                 .type = CARD_NUMBER_TYPE,
-                .value = (uint8_t)num
+                .value = (uint8_t)j
             };
 
-            if (num != 0)
+            // This conditional exists to ensure that the number 0 card only appears once per color, while the numbers 1 through 9 appear twice per color in the deck.
+            if (j != 0)
             {
                 deck->cards[index++] = (Card)
                 {
-                    .color = color,
+                    .color = (CardColor)i,
                     .type = CARD_NUMBER_TYPE,
-                    .value = (uint8_t)num
+                    .value = (uint8_t)j
                 };
             }
         }
         
-        for (int i = 0; i < 2; i++)
+        // This loop is responsible for creating the special cards of the respective color group. He creates the same cards twice.
+        for (int j = 0; j < 2; j++)
         {
             deck->cards[index++] = (Card)
             {
-                .color = color,
+                .color = (CardColor)i,
                 .type = CARD_SKIP_TYPE,
                 .value = 0
             };
             
             deck->cards[index++] = (Card)
             {
-                .color = color,
+                .color = (CardColor)i,
                 .type = CARD_REVERSE_TYPE,
                 .value = 0
             };
 
             deck->cards[index++] = (Card)
             {
-                .color = color,
+                .color = (CardColor)i,
                 .type = CARD_DRAW_TWO_TYPE,
                 .value = 0
             };
         }
     }
 
-    // Add wild and wild draw four cards
+    // Creates wild and wild cards draw four cards.
     for (int i = 0; i < 4; i++)
     {
         deck->cards[index++] = (Card)

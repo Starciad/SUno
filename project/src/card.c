@@ -12,16 +12,26 @@ const char* color_names[] =
 
 const char* value_names[] =
 { 
-    "0",
-    "1",
-    "2",
-    "3",
-    "4",
-    "5",
-    "6",
-    "7",
-    "8",
-    "9", 
+    "Zero",
+    "One",
+    "Two",
+    "Three",
+    "Four",
+    "Five",
+    "Six",
+    "Seven",
+    "Eight",
+    "Nine",
+    "Skip",
+    "Reverse",
+    "Draw Two",
+    "Wild",
+    "Wild Draw Four"
+};
+
+const char* type_names[] =
+{
+    "Number",
     "Skip",
     "Reverse",
     "Draw Two",
@@ -32,7 +42,26 @@ const char* value_names[] =
 // Prints a card
 extern void card_print(const Card* card)
 {
-    printf("[%s %s]", color_names[card->color], value_names[card->value]);
+    switch (card->type)
+    {
+        case CARD_NUMBER_TYPE:
+            printf("[%s (%s)]", value_names[card->value], color_names[card->color]);
+            break;
+
+        case CARD_SKIP_TYPE:
+        case CARD_REVERSE_TYPE:
+        case CARD_DRAW_TWO_TYPE:
+            printf("[%s (%s)]", type_names[card->type], color_names[card->color]);
+            break;
+
+        case CARD_WILD_TYPE:
+        case CARD_WILD_DRAW_FOUR_TYPE:
+        printf("[%s]", type_names[card->type]);
+            break;
+
+        default:
+            break;
+    }
 }
 
 // Checks if a card is playable
