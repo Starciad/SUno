@@ -5,7 +5,7 @@
 #include <stdbool.h>
 #include <stdint.h>
 
-#define MAX_CARDS 20  // Max hand size
+#define MAX_CARDS 108 // Max hand size
 #define MAX_NAME_LEN 20
 
 typedef struct Player {
