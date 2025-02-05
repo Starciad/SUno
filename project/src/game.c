@@ -1,4 +1,5 @@
 #include "ai.h"
+#include "ansicolor.h"
 #include "game.h"
 #include "random.h"
 #include <stdbool.h>
@@ -67,73 +68,113 @@ void check_uno_call(Game* game, Player* player)
     }
 }
 
+// =============================================================================== //
+// Handles the effect of a "Skip" card
+static void apply_skip_effect(Game* game)
+{
+    puts("Next player is skipped!");
+    game_next_turn(game);
+}
+
+// Handles the effect of a "Reverse" card
+static void apply_reverse_effect(Game* game)
+{
+    puts("Changing direction!");
+    game->direction *= -1;
+}
+
+// Handles the effect of a "Draw Two" card
+static void apply_draw_two_effect(Game* game)
+{
+    puts("Next player draws 2 cards!");
+    uint8_t next_player_index = game_get_next_player_index(game);
+    game_next_turn(game);
+
+    for (uint8_t i = 0; i < 2; i++)
+    {
+        player_add_card(&game->players[next_player_index], deck_draw(&game->deck));
+    }
+}
+
+// Prompts or randomly selects a new color for WILD cards
+static CardColor choose_wild_color(const Game* game)
+{
+    int chosen_color = 0;
+
+    if (game->players[game->current_player_index].is_ai)
+    {
+        chosen_color = rand() % 4; // AI chooses a random color
+    }
+    else
+    {
+        printf("Choose a color (0: Red, 1: Blue, 2: Green, 3: Yellow): ");
+        scanf("%d", &chosen_color);
+    }
+
+    return (CardColor)chosen_color;
+}
+
+// Converts a CardColor to a readable string
+static const char* card_color_to_string(CardColor color)
+{
+    switch (color)
+    {
+        case CARD_COLOR_RED:    return ANSI_COLOR_RED "Red" ANSI_COLOR_RESET;
+        case CARD_COLOR_BLUE:   return ANSI_COLOR_BLUE "Blue" ANSI_COLOR_RESET;
+        case CARD_COLOR_GREEN:  return ANSI_COLOR_GREEN "Green" ANSI_COLOR_RESET;
+        case CARD_COLOR_YELLOW: return ANSI_COLOR_YELLOW "Yellow" ANSI_COLOR_RESET;
+        default:           return "Unknown";
+    }
+}
+
+// Handles the effect of a "Wild" card
+static void apply_wild_effect(Game* game)
+{
+    puts("Choosing a new color...");
+    game->discard_pile.color = choose_wild_color(game);
+    printf("The chosen color was: %s\n", card_color_to_string(game->discard_pile.color));
+}
+
+// Handles the effect of a "Wild Draw Four" card
+static void apply_wild_draw_four_effect(Game* game)
+{
+    puts("Choosing a new color, next player draws 4 cards!");
+    uint8_t next_player_index = game_get_next_player_index(game);
+
+    game->discard_pile.color = choose_wild_color(game);
+    printf("The chosen color was: %s\n", card_color_to_string(game->discard_pile.color));
+
+    game_next_turn(game);
+
+    for (int i = 0; i < 4; i++)
+    {
+        player_add_card(&game->players[next_player_index], deck_draw(&game->deck));
+    }
+}
+
 // Applies the effects of special cards
 void apply_card_effect(Game* game, const Card* played_card)
 {
-    // Select the next player index based on the current context.
-    uint8_t next_player_index = game_get_next_player_index(game);
-
-    // ================================ //
-
     switch (played_card->type)
     {
         case CARD_SKIP_TYPE:
-            puts("Next player is skipped!");
-            game_next_turn(game);
+            apply_skip_effect(game);
             break;
 
         case CARD_REVERSE_TYPE:
-            puts("Changing direction!");
-            game->direction *= -1;
+            apply_reverse_effect(game);
             break;
 
         case CARD_DRAW_TWO_TYPE:
-            puts("Next player draws 2 cards!");
-            game_next_turn(game);
-
-            for (uint8_t i = 0; i < 2; i++)
-            {
-                player_add_card(&game->players[next_player_index], deck_draw(&game->deck));
-            }
+            apply_draw_two_effect(game);
             break;
 
         case CARD_WILD_TYPE:
-            puts("Choosing a new color...");
-
-            if (game->players[game->current_player_index].is_ai)
-            {
-                game->discard_pile.color = rand() % 4; // AI chooses a random color
-            }
-            else
-            {
-                int chosen_color;
-                printf("Choose a color (0: Red, 1: Blue, 2: Green, 3: Yellow): ");
-                scanf("%d", &chosen_color);
-                game->discard_pile.color = (CardColor)chosen_color;
-            }
+            apply_wild_effect(game);
             break;
 
         case CARD_WILD_DRAW_FOUR_TYPE:
-            puts("Choosing a new color, next player draws 4 cards!");
-
-            if (game->players[game->current_player_index].is_ai)
-            {
-                game->discard_pile.color = rand() % 4;
-            }
-            else
-            {
-                int chosen_color;
-                printf("Choose a color (0: Red, 1: Blue, 2: Green, 3: Yellow): ");
-                scanf("%d", &chosen_color);
-                game->discard_pile.color = (CardColor)chosen_color;
-            }
-
-            game_next_turn(game);
-
-            for (int i = 0; i < 4; i++)
-            {
-                player_add_card(&game->players[next_player_index], deck_draw(&game->deck));
-            }
+            apply_wild_draw_four_effect(game);
             break;
 
         default:

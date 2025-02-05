@@ -72,7 +72,14 @@ extern void card_print(const Card* card)
 
         case CARD_WILD_TYPE:
         case CARD_WILD_DRAW_FOUR_TYPE:
-            printf("[%s%s%s]", ANSI_COLOR_MAGENTA, type_names[card->type], ANSI_COLOR_RESET);
+            if (card->color == CARD_COLOR_BLACK)
+            {
+                printf("[%s%s%s]", ANSI_COLOR_MAGENTA, type_names[card->type], ANSI_COLOR_RESET);
+            }
+            else
+            {
+                printf("[%s%s%s (%s%s%s)]", color_code, type_names[card->type], ANSI_COLOR_RESET, color_code, color_names[card->color], ANSI_COLOR_RESET);
+            }
             break;
 
         default:
