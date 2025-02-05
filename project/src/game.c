@@ -58,7 +58,7 @@ void check_uno_call(Game* game, Player* player)
     }
 
     char response[4];
-    printf("- You have one card left! Type 'UNO' to call it: ");
+    printf("> You have one card left! Type 'UNO' to call it: ");
     scanf("%3s", response);
 
     if (strcmp(response, "UNO") != 0)
@@ -108,7 +108,7 @@ static CardColor choose_wild_color(const Game* game)
     }
     else
     {
-        printf("- Choose a color (0: Red | 1: Blue | 2: Green | 3: Yellow): ");
+        printf("> Choose a color (0: Red | 1: Blue | 2: Green | 3: Yellow): ");
         scanf("%d", &chosen_color);
     }
 
@@ -187,24 +187,24 @@ void apply_card_effect(Game* game, const Card* played_card)
 // Prints the player list.
 void game_print_players(const Game* game)
 {
-    puts("\n\n===== Player List =====\n");
+    puts("\n\n----------{ Player List }----------\n");
 
     switch (game->direction)
     {
         case GAME_DIRECTION_NONE:
-            puts("-  Game Direction is Empty!\n");
+            puts("[ Game Direction is Empty! ]\n");
             break;
 
         case GAME_DIRECTION_LEFT:
-            puts("-  Game Direction: LEFT\n");
+            puts("[ Game Direction: LEFT. ]\n");
             break;
 
         case GAME_DIRECTION_RIGHT:
-            puts("-  Game Direction: RIGHT\n");
+            puts("[ Game Direction: RIGHT. ]\n");
             break;
 
         default:
-            puts("-  Game Direction is Unknown!\n");
+            puts("[ Game Direction is Unknown! ]\n");
             break;
     }
 
@@ -233,7 +233,7 @@ void game_print_players(const Game* game)
         }
     }
 
-    printf("\n=======================");
+    printf("\n------------------------");
 }
 
 
@@ -242,10 +242,10 @@ void game_print_state(const Game* game)
 {
     // Print the current player
     puts("\n");
-    printf("( Current Player: %s. )\n", game->players[game->current_player_index].name);
-    printf("( Current Card on the Table: ");
+    printf("> Current Player: %s.\n", game->players[game->current_player_index].name);
+    printf("> Current Card on the Table: ");
     card_print(&game->discard_pile);
-    puts(" )\n");
+    puts(".\n");
 }
 
 // Print the main user's HUD
@@ -272,7 +272,7 @@ void game_execute_user_turn(Game* game, Player* player)
     game_print_hud_state(game);
 
     try_again_action_label:
-    printf("- Your turn! Select a card (1-%d) or enter 0 to draw: ", player->hand_size);
+    printf("> Your turn! Select a card (1-%d) or enter 0 to draw: ", player->hand_size);
     scanf("%d", &selected_card);
     
     if (selected_card == 0)
@@ -359,7 +359,7 @@ extern void game_init(Game* game, uint8_t num_players)
 
     // Allows the player to choose their name
     char player_name[50];
-    printf("- Enter your name: ");
+    printf("> Enter your name: ");
     scanf("%49s", player_name); // Limit input to prevent overflow
     player_init(&game->players[0], player_name, false); // The first player is the human
 

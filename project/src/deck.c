@@ -51,21 +51,21 @@ extern void deck_init(Deck* deck)
             {
                 .color = (CardColor)i,
                 .type = CARD_SKIP_TYPE,
-                .value = 0
+                .value = CARD_VALUE_NONE
             };
             
             deck->cards[index++] = (Card)
             {
                 .color = (CardColor)i,
                 .type = CARD_REVERSE_TYPE,
-                .value = 0
+                .value = CARD_VALUE_NONE
             };
 
             deck->cards[index++] = (Card)
             {
                 .color = (CardColor)i,
                 .type = CARD_DRAW_TWO_TYPE,
-                .value = 0
+                .value = CARD_VALUE_NONE
             };
         }
     }
@@ -77,14 +77,14 @@ extern void deck_init(Deck* deck)
         {
             .color = CARD_COLOR_BLACK,
             .type = CARD_WILD_TYPE,
-            .value = 0
+            .value = CARD_VALUE_NONE
         };
         
         deck->cards[index++] = (Card)
         {
             .color = CARD_COLOR_BLACK,
             .type = CARD_WILD_DRAW_FOUR_TYPE,
-            .value = 0
+            .value = CARD_VALUE_NONE
         };
     }
 

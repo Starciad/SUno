@@ -12,6 +12,7 @@ typedef enum CardColor {
 } CardColor;
 
 typedef enum CardValue {
+    CARD_VALUE_NONE = -1,
     CARD_VALUE_0 = 0,
     CARD_VALUE_1 = 1,
     CARD_VALUE_2 = 2,

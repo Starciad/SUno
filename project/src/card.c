@@ -90,5 +90,11 @@ extern void card_print(const Card* card)
 // Checks if a card is playable
 extern bool card_is_playable(const Card* card, const Card* top_card)
 {
-    return (card->color == top_card->color || card->value == top_card->value || card->color == CARD_COLOR_BLACK);
+    // A card is playable if:
+    // 1. It has the same color as the top card.
+    // 2. It has the same value as the top card (only if both have a defined value).
+    // 3. It is a wild card (black cards are always playable).
+    return (card->color == top_card->color) ||
+           (card->value != CARD_VALUE_NONE && top_card->value != CARD_VALUE_NONE && card->value == top_card->value) ||
+           (card->color == CARD_COLOR_BLACK);
 }

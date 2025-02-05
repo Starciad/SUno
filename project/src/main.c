@@ -26,7 +26,7 @@ int main(void)
 
     do
     {
-        printf("- Enter the number of players (2-10): ");
+        printf("> Enter the number of players (2-10): ");
         scanf("%d", &num_players);
     } while (num_players < 2 || num_players > 10);
 
