@@ -414,7 +414,7 @@ extern void game_init(Game* game, uint8_t num_players)
 // Method responsible for waiting for the user to press a key.
 static void wait_for_exit(void)
 {
-    puts("\n\n[ Press any key to finish... ]");
+    puts("{ Press any key to finish... }");
     getchar(); // Capture the previous ENTER
     getchar(); // Waits for any key press
 }
@@ -442,7 +442,7 @@ extern void game_start(Game* game)
 
         if (player->hand_size == 0)
         {
-            printf("{ %s WINS! }\n\n", player->name);
+            printf("{ %s WINS! }\n\n\n", player->name);
             wait_for_exit(); // Wait for the user before exiting.
             break;
         }
