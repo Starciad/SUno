@@ -59,6 +59,8 @@ The code structure has been carefully designed to be **easy to understand, modif
 
 - If a player has only **one card left**, they must declare "**UNO!**". If caught not saying it, they must **draw 2 penalty cards**. The game continues until one player has no cards left.
 
+- When a player draws a card, his turn is passed.
+
 ![uno_deck]
 > A complete deck of UNO cards.
 
