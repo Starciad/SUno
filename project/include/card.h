@@ -8,7 +8,7 @@ typedef enum CardColor {
     CARD_COLOR_BLUE = 1,
     CARD_COLOR_GREEN = 2,
     CARD_COLOR_YELLOW = 3,
-    CARD_COLOR_BLACK = 4 // Wild cards
+    CARD_COLOR_BLACK = 4 // Wild cards.
 } CardColor;
 
 typedef enum CardValue {
@@ -45,7 +45,7 @@ typedef struct Card {
     CardValue value;
 } Card;
 
-// Function prototypes
+// Function prototypes.
 void card_print(const Card* card);
 bool card_is_playable(const Card* card, const Card* top_card);
 

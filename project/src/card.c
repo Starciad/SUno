@@ -40,7 +40,7 @@ const char* type_names[] =
     /* [5] */ "Wild Draw Four"
 };
 
-// Returns the ANSI color string corresponding to the card color
+// Returns the ANSI color string corresponding to the card color.
 const char* get_ansi_color(CardColor color)
 {
     switch (color)
@@ -53,7 +53,7 @@ const char* get_ansi_color(CardColor color)
     }
 }
 
-// Prints a card with ANSI colors
+// Prints a card with ANSI colors.
 extern void card_print(const Card* card)
 {
     const char* color_code = get_ansi_color(card->color);
@@ -87,7 +87,7 @@ extern void card_print(const Card* card)
     }
 }
 
-// Checks if a card is playable
+// Checks if a card is playable.
 extern bool card_is_playable(const Card* card, const Card* top_card)
 {
     /*
@@ -110,7 +110,7 @@ extern bool card_is_playable(const Card* card, const Card* top_card)
         return true;
     }
 
-    // Ensure type comparison is only for action cards
+    // Ensure type comparison is only for action cards.
     if (card->type != CARD_NUMBER_TYPE && card->type == top_card->type)
     {
         return true;

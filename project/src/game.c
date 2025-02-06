@@ -9,7 +9,7 @@
 #include <string.h>
 #include <unistd.h>
 
-// Predefined names for bots
+// Predefined names for bots.
 const char* bot_names[] =
 {
     "James", "Mary", "John", "Jennifer", "Robert", "Linda", 
@@ -19,31 +19,31 @@ const char* bot_names[] =
 };
 
 // =============================================================================== //
-// Returns the index of the next player considering the game direction
+// Returns the index of the next player considering the game direction.
 uint8_t game_get_next_player_index(const Game* game)
 {
     int8_t next_index = game->current_player_index + game->direction;
 
-    // Handle wrap-around logic
+    // Handle wrap-around logic.
     if (next_index >= game->num_players)
     {
-        return 0; // Wrap back to the first player
+        return 0; // Wrap back to the first player.
     }
     else if (next_index < 0)
     {
-        return game->num_players - 1; // Wrap back to the last player
+        return game->num_players - 1; // Wrap back to the last player.
     }
 
     return (uint8_t)next_index;
 }
 
-// Switches to the next player using game_get_next_player_index
+// Switches to the next player using game_get_next_player_index.
 void game_next_turn(Game* game)
 {
     game->current_player_index = game_get_next_player_index(game);
 }
 
-// Asks the player to call UNO
+// Asks the player to call UNO.
 void check_uno_call(Game* game, Player* player)
 {
     if (player->hand_size != 1)
@@ -70,21 +70,21 @@ void check_uno_call(Game* game, Player* player)
 }
 
 // =============================================================================== //
-// Handles the effect of a "Skip" card
+// Handles the effect of a "Skip" card.
 static void apply_skip_effect(Game* game)
 {
     puts("{ Next player is skipped! }");
     game_next_turn(game);
 }
 
-// Handles the effect of a "Reverse" card
+// Handles the effect of a "Reverse" card.
 static void apply_reverse_effect(Game* game)
 {
     puts("{ Changing direction! }");
     game->direction *= -1;
 }
 
-// Handles the effect of a "Draw Two" card
+// Handles the effect of a "Draw Two" card.
 static void apply_draw_two_effect(Game* game)
 {
     puts("{ Next player draws 2 cards! }");
@@ -97,14 +97,14 @@ static void apply_draw_two_effect(Game* game)
     }
 }
 
-// Prompts or randomly selects a new color for WILD cards
+// Prompts or randomly selects a new color for WILD cards.
 static CardColor choose_wild_color(const Game* game)
 {
     int chosen_color = 0;
 
     if (game->players[game->current_player_index].is_ai)
     {
-        chosen_color = rand() % 4; // AI chooses a random color
+        chosen_color = rand() % 4; // AI chooses a random color.
     }
     else
     {
@@ -115,7 +115,7 @@ static CardColor choose_wild_color(const Game* game)
     return (CardColor)chosen_color;
 }
 
-// Converts a CardColor to a readable string
+// Converts a CardColor to a readable string.
 static const char* card_color_to_string(CardColor color)
 {
     switch (color)
@@ -128,7 +128,7 @@ static const char* card_color_to_string(CardColor color)
     }
 }
 
-// Handles the effect of a "Wild" card
+// Handles the effect of a "Wild" card.
 static void apply_wild_effect(Game* game)
 {
     puts("{ Choosing a new color... }");
@@ -136,7 +136,7 @@ static void apply_wild_effect(Game* game)
     printf("{ The chosen color was: %s. }\n", card_color_to_string(game->discard_pile.color));
 }
 
-// Handles the effect of a "Wild Draw Four" card
+// Handles the effect of a "Wild Draw Four" card.
 static void apply_wild_draw_four_effect(Game* game)
 {
     puts("{ Choosing a new color, next player draws 4 cards! }");
@@ -153,7 +153,7 @@ static void apply_wild_draw_four_effect(Game* game)
     }
 }
 
-// Applies the effects of special cards
+// Applies the effects of special cards.
 void apply_card_effect(Game* game, const Card* played_card)
 {
     switch (played_card->type)
@@ -212,7 +212,7 @@ void game_print_players(const Game* game)
     {
         const Player* player = &game->players[i];
 
-        // Indicate the current player
+        // Indicate the current player.
         if (i == game->current_player_index)
         {
             printf(">  ");
@@ -237,10 +237,10 @@ void game_print_players(const Game* game)
 }
 
 
-// Print the current game state
+// Print the current game state.
 void game_print_state(const Game* game)
 {
-    // Print the current player
+    // Print the current player.
     puts("\n");
     printf("> Current Player: %s.\n", game->players[game->current_player_index].name);
     printf("> Current Card on the Table: ");
@@ -248,10 +248,10 @@ void game_print_state(const Game* game)
     puts(".\n");
 }
 
-// Print the main user's HUD
+// Print the main user's HUD.
 void game_print_hud_state(const Game* game)
 {
-    // Prints the user hand of cards
+    // Prints the user hand of cards.
     puts("YOUR HAND:\n");
 
     for (int i = 0; i < game->players[game->current_player_index].hand_size; i++) {
@@ -264,7 +264,7 @@ void game_print_hud_state(const Game* game)
 }
 
 // =============================================================================== //
-// Method responsible for handling player turn protocols
+// Method responsible for handling player turn protocols.
 void game_execute_user_turn(Game* game, Player* player)
 {
     int selected_card = 0;
@@ -297,7 +297,7 @@ void game_execute_user_turn(Game* game, Player* player)
     check_uno_call(game, player);
 }
 
-// Method responsible for handling AI shift routines
+// Method responsible for handling AI shift routines.
 void game_execute_ai_turn(Game* game, Player* player)
 {
     Card selected_card;
@@ -310,7 +310,7 @@ void game_execute_ai_turn(Game* game, Player* player)
         return;
     }
 
-    // Find the index of the selected card in your hand
+    // Find the index of the selected card in your hand.
     int selected_index = -1;
     for (int i = 0; i < player->hand_size; i++)
     {
@@ -340,16 +340,16 @@ void game_execute_ai_turn(Game* game, Player* player)
 
 // =============================================================================== //
 
-// Initializes the game, dealing the cards and setting up the players
+// Initializes the game, dealing the cards and setting up the players.
 extern void game_init(Game* game, uint8_t num_players)
 {
     game->num_players = num_players;
     game->current_player_index = 0;
     game->direction = GAME_DIRECTION_RIGHT;
 
-    deck_init(&game->deck); // Create the deck of cards
+    deck_init(&game->deck); // Create the deck of cards.
 
-    // Shuffle the deck
+    // Shuffle the deck.
     uint8_t deck_shifting_count = random_int(MIN_DECK_SHIFTING_COUNT, MAX_DECK_SHIFTING_COUNT);
     
     for (uint8_t i = 0; i < deck_shifting_count; i++)
@@ -357,19 +357,19 @@ extern void game_init(Game* game, uint8_t num_players)
         deck_shuffle(&game->deck); 
     }
 
-    // Allows the player to choose their name
+    // Allows the player to choose their name.
     char player_name[50];
     printf("> Enter your name: ");
-    scanf("%49s", player_name); // Limit input to prevent overflow
-    player_init(&game->players[0], player_name, false); // The first player is the human
+    scanf("%49s", player_name); // Limit input to prevent overflow.
+    player_init(&game->players[0], player_name, false); // The first player is the human.
 
-    // Deals cards to the player
+    // Deals cards to the player.
     for (uint8_t j = 0; j < 7; j++)
     {
         player_add_card(&game->players[0], deck_draw(&game->deck));
     }
 
-    // Assigns names and distributes cards to bots
+    // Assigns names and distributes cards to bots.
     uint8_t bot_index = 1;
     for (uint8_t i = 1; i < num_players; i++)
     {
@@ -383,7 +383,7 @@ extern void game_init(Game* game, uint8_t num_players)
         bot_index++;
     }
 
-    // Shuffle the deck
+    // Shuffle players.
     uint8_t players_shifting_count = random_int(MIN_PLAYERS_SHIFTING_COUNT, MAX_PLAYERS_SHIFTING_COUNT);
     
     for (uint8_t i = 0; i < players_shifting_count; i++)
@@ -391,10 +391,10 @@ extern void game_init(Game* game, uint8_t num_players)
         players_shuffle(game->players, num_players);
     }
 
-    // Put a card in the discard pile
+    // Put a card in the discard pile.
     game->discard_pile = deck_draw(&game->deck);
     
-    // Ensures the starting card is playable
+    // Ensures the starting card is playable.
     while (!card_is_playable(&game->discard_pile, &game->discard_pile))
     {
         game->discard_pile = deck_draw(&game->deck);
@@ -406,8 +406,7 @@ extern void game_init(Game* game, uint8_t num_players)
     {
         printf("%i. %s\n", i + 1, game->players[i].name);
     }
-    printf("\n");
-    puts("The game has started! Good luck!");
+    puts("\nThe game has started! Good luck!");
     sleep(5);
 }
 
@@ -415,11 +414,11 @@ extern void game_init(Game* game, uint8_t num_players)
 static void wait_for_exit(void)
 {
     puts("{ Press any key to finish... }");
-    getchar(); // Capture the previous ENTER
-    getchar(); // Waits for any key press
+    getchar(); // Capture the previous ENTER.
+    getchar(); // Waits for any key press.
 }
 
-// Updates the game loop to include UNO call
+// Updates the game loop to include UNO call.
 extern void game_start(Game* game)
 {
     while (true)
@@ -442,7 +441,7 @@ extern void game_start(Game* game)
 
         if (player->hand_size == 0)
         {
-            printf("{ %s WINS! }\n\n\n", player->name);
+            printf("{ %s WINS! }\n\n", player->name);
             wait_for_exit(); // Wait for the user before exiting.
             break;
         }

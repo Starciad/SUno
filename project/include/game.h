@@ -28,7 +28,7 @@ typedef struct Game {
     GameDirection direction;
 } Game;
 
-// Function prototypes
+// Function prototypes.
 void game_init(Game* game, uint8_t num_players);
 void game_start(Game* game);
 

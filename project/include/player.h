@@ -5,7 +5,7 @@
 #include <stdbool.h>
 #include <stdint.h>
 
-#define MAX_CARDS 108 // Max hand size
+#define MAX_CARDS 108 // Max hand size.
 #define MAX_NAME_LEN 20
 
 typedef struct Player {
@@ -15,7 +15,7 @@ typedef struct Player {
     bool is_ai;
 } Player;
 
-// Function prototypes
+// Function prototypes.
 void player_init(Player* player, const char* name, bool is_ai);
 void players_shuffle(Player players[], uint8_t num_players);
 void player_add_card(Player* player, Card new_card);

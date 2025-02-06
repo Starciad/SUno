@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-// Function to initialize the UNO deck
+// Function to initialize the UNO deck.
 extern void deck_init(Deck* deck)
 {
     uint8_t index = 0;
@@ -14,10 +14,10 @@ extern void deck_init(Deck* deck)
     /* 
      * Creates the same cards in the four existing color groupings:
      *
-     * - CARD_COLOR_RED = 0
-     * - CARD_COLOR_BLUE = 1
-     * - CARD_COLOR_GREEN = 2
-     * - CARD_COLOR_YELLOW = 3
+     * - CARD_COLOR_RED = 0;
+     * - CARD_COLOR_BLUE = 1;
+     * - CARD_COLOR_GREEN = 2;
+     * - CARD_COLOR_YELLOW = 3.
      * 
      */
     for (int i = 0; i < 4; i++)
@@ -88,15 +88,15 @@ extern void deck_init(Deck* deck)
         };
     }
 
-    deck->top_index = 0; // Start from the beginning
+    deck->top_index = 0; // Start from the beginning.
 }
 
-// Function to shuffle the deck
+// Function to shuffle the deck.
 extern void deck_shuffle(Deck* deck)
 {
     for (int i = DECK_SIZE - 1; i > 0; i--)
     {
-        int j = random_int(0, i); // Utility function for random numbers
+        int j = random_int(0, i); // Utility function for random numbers.
 
         Card temp = deck->cards[i];
         deck->cards[i] = deck->cards[j];
@@ -104,7 +104,7 @@ extern void deck_shuffle(Deck* deck)
     }
 }
 
-// Function to draw a card from the deck
+// Function to draw a card from the deck.
 extern Card deck_draw(Deck* deck)
 {
     if (deck->top_index >= DECK_SIZE)
